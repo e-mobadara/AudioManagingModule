@@ -21,7 +21,20 @@ compileSdkVersion 28
 ## Step2. Add the dependency
 
 ```
-implementation project(':audioManagingModule')
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+## And In your build.gradle
+
+```
+dependencies {
+	        implementation 'com.github.e-mobadara:AudioManagingModule:v0.0.1'
+	}
 ```
 
 ## Step3.Move packages to your project.
