@@ -3,7 +3,7 @@ package com.e_mobadara.audiomanaging;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,9 +26,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.e_mobadara.Data.AudioFile;
-import com.e_mobadara.Data.AudioFileDBHelperClass;
-import com.e_mobadara.Data.AudioFilesTable;
+import com.e_mobadara.Database.AudioFile;
+import com.e_mobadara.Database.MyDatabase;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +36,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import static java.io.File.separator;
-import static java.security.AccessController.getContext;
 
 public class addAudioFile extends AppCompatActivity {
 
@@ -60,13 +58,12 @@ public class addAudioFile extends AppCompatActivity {
             audioLangue,audioType;
 
     File audioFile;
-
-    private static final int CURSOR_LOADER_ID = 0;
+    private MyDatabase dbInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_audio_file);
+        setContentView(R.layout.activity_add_audio_file);
         Log.d(TAG, "on create");
 
         if(getIntent().getExtras()!=null){
@@ -81,6 +78,11 @@ public class addAudioFile extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayShowTitleEnabled(false);
         actionbar.setDisplayHomeAsUpEnabled(true);
+
+        dbInstance = Room.databaseBuilder(this,
+                MyDatabase.class, "AudioFiles")
+                .allowMainThreadQueries()
+                .build();
 
         chercherAudio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,11 +195,11 @@ public class addAudioFile extends AppCompatActivity {
         boolean success = true;
         if (isStoragePermissionGranted()) {
             if (!folder.exists()) {
-                Toast.makeText(this, "Directory Does Not Exist, Create It", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Directory Does Not Exist, Create It", Toast.LENGTH_SHORT).show();
                 success = folder.mkdirs();
             }
             if (success) {
-                Toast.makeText(this, "Directory Created", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Directory Created", Toast.LENGTH_SHORT).show();
                 return success;
             } else {
                 Toast.makeText(this, "Failed - Error", Toast.LENGTH_SHORT).show();
@@ -284,6 +286,7 @@ public class addAudioFile extends AppCompatActivity {
             cursor.close();
         }
         else{
+            cursor.close();
             Log.d(TAG, "problem with the cursor");
         }
     }
@@ -296,16 +299,9 @@ public class addAudioFile extends AppCompatActivity {
 
     // insert data into database
     public void insertData(){
-        ContentValues afContentValue = new ContentValues();
         Log.d(TAG, "data to store ...");
         Log.d(TAG,audio.toString());
-        afContentValue.put(AudioFilesTable.AudioFilesEntry.COLUMN_NAME, audio.getafName());
-        afContentValue.put(AudioFilesTable.AudioFilesEntry.COLUMN_LANGUE, audio.getafLangue());
-        afContentValue.put(AudioFilesTable.AudioFilesEntry.COLUMN_PATH, audio.getafPath());
-        afContentValue.put(AudioFilesTable.AudioFilesEntry.COLUMN_TYPE, audio.getafType());
 
-        // Insert our ContentValues array
-        getContentResolver().insert(AudioFilesTable.AudioFilesEntry.CONTENT_URI,
-                afContentValue);
+        dbInstance.AudioFileDao().addAudioFile(audio);
     }
 }

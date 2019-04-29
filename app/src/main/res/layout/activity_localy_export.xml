@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    tools:context="fragments.ExcellentActivity">
+    tools:context=".localyExportActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,7 +15,7 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/excellent_my_recycler_view"
+                android:id="@+id/exp_localy_my_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
@@ -24,22 +23,19 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/excellent_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="5dp"
-            fab:srcCompat="@drawable/ic_add"
-            android:visibility="visible" />
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/exp_localy_confirmation_btn"
+            style="@style/AppTheme.Button"
+            android:text="Confirmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+
 
 </RelativeLayout>

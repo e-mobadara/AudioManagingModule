@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.e_mobadara.Adapter.myExpImpAdapter;
-import com.e_mobadara.Data.AudioFile;
+import com.e_mobadara.Database.AudioFile;
 import com.e_mobadara.utils.ApiService;
 import com.e_mobadara.utils.AudioFileDTO;
 import com.e_mobadara.utils.AudioList;
@@ -35,16 +35,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
 
 public class ExportImportActivity extends AppCompatActivity {
 
@@ -126,7 +122,7 @@ public class ExportImportActivity extends AppCompatActivity {
                                 if(creerAppFolder()) {
                                     if(creerRootFolder()){
                                         if (creerFolder(i.getafType())) {
-                                            downloadFile(i.getAfServerId());
+                                            //downloadFile(i.getAfServerId());
                                             saveSharedPreferences();
                                         }
                                     }
@@ -368,9 +364,9 @@ public class ExportImportActivity extends AppCompatActivity {
                         return;
                     }
                     for(AudioFileDTO i : audiof){
-                        AudioFile j = new AudioFile(i.getId(),i.getaName(),i.getAtype(),i.getAlangue());
-                        Log.d(TAG, "file from server : "+ j.toString());
-                        itemsData.add(j);
+                        //AudioFile j = new AudioFile(i.getId(),i.getaName(),i.getAtype(),i.getAlangue());
+                       // Log.d(TAG, "file from server : "+ j.toString());
+                       // itemsData.add(j);
                     }
                 } else {
                     Log.d(TAG, "server contact failed");

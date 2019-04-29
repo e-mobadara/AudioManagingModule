@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class AudioSettingsActivity extends AppCompatActivity {
 
-    Button export_button, import_button, managing_button;
+    Button server_button, localy_button, managing_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,32 +17,32 @@ public class AudioSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_audio_settings);
 
 
-        export_button = findViewById(R.id.audio_file_export_button);
-        import_button = findViewById(R.id.audio_file_import_button);
+        server_button = findViewById(R.id.audio_file_server_button);
+        localy_button = findViewById(R.id.audio_file_localy_button);
         managing_button = findViewById(R.id.audio_file_managing_button);
 
 
-        /*export_button.setOnClickListener(new View.OnClickListener() {
+        /*server_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplication(),ExportImportActivity.class);
-                i.putExtra("WorkToDo","export");
-                startActivity(i);
-                finish();
-            }
-        });
-
-
-        import_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplication(),ExportImportActivity.class);
-                i.putExtra("WorkToDo","import");
+                i.putExtra("WorkToDo","server");
                 startActivity(i);
                 finish();
             }
         });
         */
+
+        localy_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplication(),chooseImportOrExportActivity.class);
+                i.putExtra("WorkToDo","localy");
+                startActivity(i);
+                finish();
+            }
+        });
+
         managing_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

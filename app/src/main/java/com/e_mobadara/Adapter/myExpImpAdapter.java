@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.e_mobadara.Data.AudioFile;
+import com.e_mobadara.Database.AudioFile;
 import com.e_mobadara.audiomanaging.R;
 
 import java.util.ArrayList;
@@ -42,7 +42,8 @@ public class myExpImpAdapter extends RecyclerView.Adapter<myExpImpAdapter.ViewHo
         // - replace the contents of the view with that itemsData
 
         viewHolder.txtViewTitle.setText(_itemsData.get(position).getafName());
-        viewHolder.txtViewDesc.setText(_itemsData.get(position).getafPath());
+        viewHolder.txtViewDesc.setText("Langue: "+ _itemsData.get(position).getafLangue()
+                + " | type: " + _itemsData.get(position).getafType());
         viewHolder.check_box.setFocusable(false);
         viewHolder.check_box.setFocusableInTouchMode(false);
         viewHolder.check_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
