@@ -37,13 +37,10 @@ dependencies {
 	}
 ```
 
-## Step3.Move packages to your project.
+## Step3.Change XML files so that it conforms your game style.
 
 
-## Step4.Change XML files so that it conforms your game style.
-
-
-## Step5.Use The Module to get audio files 
+## Step4.Use The Module to get audio files 
 
 ```
   MediaPlayer audiofile= 
