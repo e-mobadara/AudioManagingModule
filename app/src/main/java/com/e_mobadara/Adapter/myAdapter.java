@@ -27,7 +27,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
     public myAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.img_row, null);
+                .inflate(R.layout.img_audio_row, null);
 
         // create ViewHolder
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);

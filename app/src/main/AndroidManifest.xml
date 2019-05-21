@@ -15,7 +15,7 @@
 
         android:theme="@style/AppTheme"
         tools:replace="theme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainAudioModuleActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.e_mobadara.audiomanaging.AudioSettingsActivity" />
@@ -23,9 +23,14 @@
         <activity android:name=".addAudioFile">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.e_mobadara.audiomanaging.MainActivity" />
+                android:value="com.e_mobadara.audiomanaging.MainAudioModuleActivity" />
         </activity>
         <activity android:name=".AudioSettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ExportImportActivity" />
 

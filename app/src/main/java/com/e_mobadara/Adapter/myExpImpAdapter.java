@@ -28,7 +28,7 @@ public class myExpImpAdapter extends RecyclerView.Adapter<myExpImpAdapter.ViewHo
     public myExpImpAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.img_row_check, null);
+                .inflate(R.layout.img_audio_row_check, null);
 
         // create ViewHolder
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);

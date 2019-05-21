@@ -111,20 +111,23 @@ public class addAudioFile extends AppCompatActivity {
         confirmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 /**
                  * Au cas de confirmation du fichier audio, on doit :
                  * verifier la présence d'un répértoire "audio files" dans "external storage",sinon créer le.
                  * Vérifier si le fichier et à l'interieur du répértoire "audio files",sinon créer le.
-                 * valider l'opération et dériger l'utilisateur vers l'activité "MainActivity".
+                 * valider l'opération et dériger l'utilisateur vers l'activité "MainAudioModuleActivity".
                  */
-                if(audioType.equals(folder_excellent)||audioType.equals(folder_good)||audioType.equals(folder_encouragement)) {
-                    current_folder = audioType;
-                            if (creerFolder(current_folder)) {
-                                saveFile();
-                                insertData();
-                            }
-                    reloadActivity();
+                if(audio.getafPath()!=null){
+                    if(audioType.equals(folder_excellent)||audioType.equals(folder_good)||audioType.equals(folder_encouragement)) {
+                        current_folder = audioType;
+                                if (creerFolder(current_folder)) {
+                                    saveFile();
+                                    insertData();
+                                }
+                        reloadActivity();
+                    }
+                }else{
+                    Toast.makeText(getApplication(), "No audio file was selected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -139,7 +142,7 @@ public class addAudioFile extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i = new Intent(this,MainActivity.class);
+                Intent i = new Intent(this,MainAudioModuleActivity.class);
                 startActivity(i);
                 finish();
                 return true;
@@ -241,8 +244,8 @@ public class addAudioFile extends AppCompatActivity {
                     Log.d(TAG, ""+data.getData());
                     _getRealPathFromURI(this, data.getData());
                     audioFile = new File(audio.getafPath());
-                    audio.setafPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/e-mobadara/" +
-                            root_folder + separator + audioType + separator + audio.getafName());
+                    audio.setafPath(Environment.getExternalStorageDirectory().getAbsolutePath() + separator +"e-mobadara"+
+                            separator + root_folder + separator + audioType + separator + audio.getafName());
                     changeTextView();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -291,7 +294,7 @@ public class addAudioFile extends AppCompatActivity {
         }
     }
     void reloadActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,MainAudioModuleActivity.class);
         intent.putExtra("langue",audioLangue);
         startActivity(intent);
         finish();

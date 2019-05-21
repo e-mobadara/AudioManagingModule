@@ -2,10 +2,8 @@ package fragments;
 
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,12 +19,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.e_mobadara.Adapter.myAdapter;
 import com.e_mobadara.Database.AudioFile;
 import com.e_mobadara.Database.MyDatabase;
-import com.e_mobadara.audiomanaging.MainActivity;
+import com.e_mobadara.audiomanaging.MainAudioModuleActivity;
 import com.e_mobadara.audiomanaging.R;
 import com.e_mobadara.audiomanaging.addAudioFile;
 import com.e_mobadara.utils.RecyclerItemClickListener;
@@ -72,7 +69,7 @@ public class EncouragementActivity extends Fragment {
                  */
                 Intent intent = new Intent(getContext(),addAudioFile.class);
                 intent.putExtra("audio_type",current_folder);
-                intent.putExtra("langue",MainActivity.getLangue());
+                intent.putExtra("langue",MainAudioModuleActivity.getLangue());
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -188,15 +185,15 @@ public class EncouragementActivity extends Fragment {
     }
 
     void reloadActivity(){
-        Intent intent = new Intent(getContext(),MainActivity.class);
-        intent.putExtra("langue",MainActivity.getLangue());
+        Intent intent = new Intent(getContext(),MainAudioModuleActivity.class);
+        intent.putExtra("langue",MainAudioModuleActivity.getLangue());
         startActivity(intent);
         getActivity().finish();
     }
     List<AudioFile> loadDataFromDatabase() {
         /* To query all records */
         Log.d(TAG, " fetching data from database :");
-        List<AudioFile> afs = dbInstance.AudioFileDao().getAudioFilesType(current_folder, MainActivity.getLangue());
+        List<AudioFile> afs = dbInstance.AudioFileDao().getAudioFilesType(current_folder, MainAudioModuleActivity.getLangue());
         final List<AudioFile> audioFile = new ArrayList<>();
         //AudioFile e = new AudioFile(...) ;
         //dbInstance.etabDao().addAudioFile(e);
