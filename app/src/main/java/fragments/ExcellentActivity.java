@@ -74,6 +74,19 @@ public class ExcellentActivity extends Fragment {
                 intent.putExtra("audio_type",current_folder);
                 intent.putExtra("langue",MainAudioModuleActivity.getLangue());
                 startActivity(intent);
+                try {
+                    if (mp.isPlaying()) {
+                        Log.d(TAG, "isplaying");
+                        if (mp != null) {
+                            Log.d(TAG, "stoping");
+                            mp.stop();
+                            mp.reset();
+                            //mPlayPause.setImageResource(R.drawable.ic_play);
+                        }
+                    }
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
                 getActivity().finish();
             }
         });
@@ -109,22 +122,22 @@ public class ExcellentActivity extends Fragment {
                             @Override public void onItemClick(View view, final int position) {
                                 Log.d(TAG, "RecyclerItemClickListener");
                                 _position = position;
-                                if (mp.isPlaying()) {
-                                    Log.d(TAG, "isplaying");
-                                    if (mp != null) {
-                                        Log.d(TAG, "stoping");
-                                        try {
-                                            mp.stop();
-                                            mp.reset();
-                                        } catch (IllegalStateException e) {
-                                            e.printStackTrace();
+                                try {
+                                    if (mp.isPlaying()) {
+                                        Log.d(TAG, "isplaying");
+                                        if (mp != null) {
+                                            Log.d(TAG, "stoping");
+                                                mp.stop();
+                                                mp.reset();
+                                            //mPlayPause.setImageResource(R.drawable.ic_play);
                                         }
-                                        //mPlayPause.setImageResource(R.drawable.ic_play);
+                                    } else {
+                                        Log.d(TAG, "starting");
+                                        playSong(itemsData.get(_position).getafPath());
+                                        //mPlayPause.setImageResource(R.drawable.ic_stop);
                                     }
-                                } else {
-                                    Log.d(TAG, "starting");
-                                    playSong(itemsData.get(_position).getafPath());
-                                    //mPlayPause.setImageResource(R.drawable.ic_stop);
+                                } catch (IllegalStateException e) {
+                                    e.printStackTrace();
                                 }
                             }
 
@@ -147,6 +160,19 @@ public class ExcellentActivity extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         AudioFile i  = itemsData.get(_position);
                                         Log.d(TAG, " deleting audio file.");
+                                        try {
+                                            if (mp.isPlaying()) {
+                                                Log.d(TAG, "isplaying");
+                                                if (mp != null) {
+                                                    Log.d(TAG, "stoping");
+                                                    mp.stop();
+                                                    mp.reset();
+                                                    //mPlayPause.setImageResource(R.drawable.ic_play);
+                                                }
+                                            }
+                                        } catch (IllegalStateException e) {
+                                            e.printStackTrace();
+                                        }
                                         if(!checkIfAdioFileIsUsed(i)) {
                                             File fileToDelete = new File (i.getafPath());
                                             Log.d(TAG, itemsData.get(_position).getafPath());
@@ -157,7 +183,6 @@ public class ExcellentActivity extends Fragment {
                                         Log.d(TAG, " delete data from database :");
                                         dbInstance.AudioFileDao()
                                                 .deleteAudioFile(i);
-                                        mp.release();
                                         reloadActivity();
                                     }
                                 });
@@ -230,5 +255,42 @@ public class ExcellentActivity extends Fragment {
             return success;
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("excellent","resume");
+        try {
+            if (mp.isPlaying()) {
+                Log.d(TAG, "isplaying");
+                if (mp != null) {
+                    Log.d(TAG, "stoping");
+                    mp.stop();
+                    mp.reset();
+                    //mPlayPause.setImageResource(R.drawable.ic_play);
+                }
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("excellent","Pause");
+        try {
+            if (mp.isPlaying()) {
+                Log.d(TAG, "isplaying");
+                if (mp != null) {
+                    Log.d(TAG, "stoping");
+                    mp.stop();
+                    mp.reset();
+                    //mPlayPause.setImageResource(R.drawable.ic_play);
+                }
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
