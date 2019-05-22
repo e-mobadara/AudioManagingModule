@@ -36,7 +36,6 @@ import java.util.List;
 
 public class EncouragementActivity extends Fragment {
     private  static final String TAG="EncouragementActivity";
-    private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     List<AudioFile> itemsData  = new ArrayList<>();
     RecyclerView recyclerView;
@@ -47,7 +46,7 @@ public class EncouragementActivity extends Fragment {
     private static final int CURSOR_LOADER_ID = 0;
     private MyDatabase dbInstance;
 
-    private MediaPlayer mp = new MediaPlayer();
+    public static MediaPlayer mp = new MediaPlayer();
 
 
     @Nullable
@@ -102,16 +101,9 @@ public class EncouragementActivity extends Fragment {
         recyclerView.setAdapter(mAdapter);
         // 5. set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView = view.findViewById(R.id.encouragement_my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        // specify an adapter (see also next example)
-        mAdapter = new myAdapter(itemsData);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setHasFixedSize(true);
         recyclerView
                 .addOnItemTouchListener(
                         new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {

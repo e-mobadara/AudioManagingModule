@@ -17,6 +17,10 @@ import android.widget.Toast;
 
 import com.e_mobadara.Adapter.TabAdapter;
 
+import fragments.EncouragementActivity;
+import fragments.ExcellentActivity;
+import fragments.GoodActivity;
+
 public class MainAudioModuleActivity extends AppCompatActivity {
 
     private static final String TAG = "MainAudioModuleActivity";
@@ -130,6 +134,9 @@ public class MainAudioModuleActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager1.setCurrentItem(tab.getPosition());
+                EncouragementActivity.mp.reset();
+                ExcellentActivity.mp.reset();
+                GoodActivity.mp.reset();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
