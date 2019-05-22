@@ -114,8 +114,12 @@ public class EncouragementActivity extends Fragment {
                                     Log.d(TAG, "isplaying");
                                     if (mp != null) {
                                         Log.d(TAG, "stoping");
-                                        mp.stop();
-                                        mp.reset();
+                                        try {
+                                            mp.stop();
+                                            mp.reset();
+                                        } catch (IllegalStateException e) {
+                                            e.printStackTrace();
+                                        }
                                         //mPlayPause.setImageResource(R.drawable.ic_play);
                                     }
                                 } else {
