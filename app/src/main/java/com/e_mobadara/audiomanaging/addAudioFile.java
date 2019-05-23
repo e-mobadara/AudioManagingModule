@@ -95,8 +95,8 @@ public class addAudioFile extends AppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
+                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permissions,PERMISSION_CODE);
                     }
                     else{
@@ -121,8 +121,12 @@ public class addAudioFile extends AppCompatActivity {
                     if(audioType.equals(folder_excellent)||audioType.equals(folder_good)||audioType.equals(folder_encouragement)) {
                         current_folder = audioType;
                                 if (creerFolder(current_folder)) {
+                                    Log.v(TAG, "avant save: ");
                                     saveFile();
+                                    Log.v(TAG, "apres save: ");
+                                    Log.v(TAG, "avant insert: ");
                                     insertData();
+                                    Log.v(TAG, "apres insert: ");
                                 }
                         reloadActivity();
                     }
@@ -193,8 +197,8 @@ public class addAudioFile extends AppCompatActivity {
     }
 
     boolean creerFolder(String folder_name){
-        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/e-mobadara/" +
-                root_folder + separator + folder_name);
+        File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + separator+"e-mobadara"+
+                separator + root_folder + separator + folder_name);
         boolean success = true;
         if (isStoragePermissionGranted()) {
             if (!folder.exists()) {
@@ -215,10 +219,16 @@ public class addAudioFile extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                return true;
+                if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_GRANTED){
+                    return true;
+                }
+                return false;
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
             }
         }

@@ -164,6 +164,14 @@ public class MainAudioModuleActivity extends AppCompatActivity {
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                viewPager1.setCurrentItem(tab.getPosition());
+                try {
+                    EncouragementActivity.mp.reset();
+                    ExcellentActivity.mp.reset();
+                    GoodActivity.mp.reset();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
