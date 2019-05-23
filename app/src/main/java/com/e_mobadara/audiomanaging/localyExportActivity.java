@@ -47,7 +47,6 @@ public class localyExportActivity extends AppCompatActivity {
 
     Button buttonConfirmation;
     private  static final String TAG="ExportLocalyActivity";
-    private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     myExpImpAdapter mAdapter;
     List<AudioFile> itemsData  = new ArrayList<AudioFile>();
@@ -96,13 +95,13 @@ public class localyExportActivity extends AppCompatActivity {
                     }
                 }
                 createXMLFile(imp_files);
-                showNotification();
+                showSuccessNotification();
             }
         });
 
     }
 
-    private void showNotification() {
+    private void showSuccessNotification() {
         AlertDialog ad = new AlertDialog.Builder(this)
                 .create();
         ad.setCancelable(true);
@@ -152,16 +151,10 @@ public class localyExportActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
         // 5. set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView = findViewById(R.id.exp_localy_my_recycler_view);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        // specify an adapter (see also next example)
-        mAdapter = new myExpImpAdapter(itemsData);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setHasFixedSize(true);
+        
     }
 
     void reloadActivity(){

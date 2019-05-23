@@ -1,11 +1,15 @@
 package com.e_mobadara.audiomanaging;
 
+import android.app.Dialog;
+import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -16,6 +20,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.e_mobadara.Adapter.TabAdapter;
+import com.e_mobadara.Database.AudioFile;
+import com.e_mobadara.Database.MyDatabase;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import fragments.EncouragementActivity;
 import fragments.ExcellentActivity;
@@ -28,6 +38,8 @@ public class MainAudioModuleActivity extends AppCompatActivity {
     ViewPager viewPager1;
     TabLayout tabLayout1;
     TabAdapter adapter;
+
+    MyDatabase dbInstance;
 
     private static String langue = "AR"; // Par defaut
     public static String getLangue() {
@@ -44,6 +56,11 @@ public class MainAudioModuleActivity extends AppCompatActivity {
         actionbar.setDisplayShowTitleEnabled(false);
         actionbar.setDisplayHomeAsUpEnabled(true);
 
+        dbInstance = Room.databaseBuilder(this,
+                MyDatabase.class, "AudioFiles")
+                .allowMainThreadQueries()
+                .build();
+        loadDataFromDatabase();
     }
 
     @Override
@@ -155,5 +172,35 @@ public class MainAudioModuleActivity extends AppCompatActivity {
         intent.putExtra("langue",langue);
         startActivity(intent);
         finish();
+    }
+
+    boolean checkAudioFileIfExist(String folder_path){
+        File folder = new File( folder_path );
+        boolean success = true;
+        if (!folder.exists()) {
+            //Toast.makeText(this, "audio-file Does Not Exist...", Toast.LENGTH_SHORT).show();
+            success = false;
+        }
+        if (success) {
+            return success;
+        } else {
+            //Toast.makeText(this, "Failed - Error", Toast.LENGTH_SHORT).show();
+            return success;
+        }
+    }
+    void loadDataFromDatabase() {
+        /* To query all records */
+        Log.d(TAG, " fetching data from database :");
+        List<AudioFile> afs = dbInstance.AudioFileDao().getAudioFiles();
+        //AudioFile e = new AudioFile(...) ;
+        //dbInstance.etabDao().addAudioFile(e);
+        if(afs.size()!=0){
+            for(AudioFile af : afs) {
+                if(!checkAudioFileIfExist(af.getafPath())){
+                    dbInstance.AudioFileDao()
+                            .deleteAudioFile(af);
+                }
+            }
+        }
     }
 }
