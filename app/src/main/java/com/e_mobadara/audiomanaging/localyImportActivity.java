@@ -97,8 +97,8 @@ public class localyImportActivity extends AppCompatActivity {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
+                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permissions,PERMISSION_CODE);
                     }
                     else{
@@ -295,10 +295,16 @@ public class localyImportActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                return true;
+                if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED){
+                    return true;
+                }
+                return false;
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
             }
         }
