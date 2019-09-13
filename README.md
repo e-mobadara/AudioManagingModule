@@ -29,14 +29,6 @@ compileSdkVersion 28
 	}
 ```
 
-## And In your build.gradle
-
-```
-dependencies {
-	        implementation 'com.github.e-mobadara:AudioManagingModule:v0.0.1'
-	}
-```
-
 ## Step3.Change XML files so that it conforms your game style.
 
 
